@@ -4,8 +4,16 @@
 var ContactPicker = function() {};
 
 
-ContactPicker.prototype.chooseContact = function(success, failure) {
+ContactPicker.prototype.chooseContact = function(contact,success, failure) {
 	var newContantInfo = null;
+	var newContant = null;
+	if(contact && device.platform == "Android")
+		newContant = {
+			id: contact.id ? contact.id  : "",
+			displayName: contact.displayName ? contact.displayName : "",
+			email: contact.email ? contact.email : "",
+			mobileNumber: contact.mobileNumber ? contact.mobileNumber : ""
+		}
 	cordova.exec(function(contactInfo) {
 		newContantInfo = {
 			id: contactInfo.id,
@@ -28,7 +36,7 @@ ContactPicker.prototype.chooseContact = function(success, failure) {
 			newContantInfo.address.push("")
 		}
 		success(newContantInfo);
-	}, failure, "ContactPicker", "chooseContact", []);
+	}, failure, "ContactPicker", "chooseContact", [newContant]);
 };
 
 ContactPicker.prototype.addContact = function(contact, success, failure) {
