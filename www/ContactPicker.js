@@ -28,13 +28,13 @@ ContactPicker.prototype.chooseContact = function(contact,success, failure) {
 			if (contactInfo.phones[i].length)
 			newContantInfo.phones = newContantInfo.phones.concat(contactInfo.phones[i]);
 		};
-		if(contactInfo.address && contactInfo.address.length){
+		/*if(contactInfo.address && contactInfo.address.length){
 			for (var i in contactInfo.address) {
 				newContantInfo.address.push(contactInfo.address[i]);
 			};
 		}else{
 			newContantInfo.address.push("")
-		}
+		}*/
 		success(newContantInfo);
 	}, failure, "ContactPicker", "chooseContact", [newContant]);
 };
@@ -62,13 +62,13 @@ ContactPicker.prototype.addContact = function(contact, success, failure) {
 			if (contactInfo.phones[i].length)
 				newContantInfo.phones.push(contactInfo.phones[i]);
 		};
-		if(contactInfo.address.length){
+		/*if(contactInfo.address.length){
 			for (var i in contactInfo.address) {
 				newContantInfo.address.push(contactInfo.address[i]);
 			};
 		}else{
 			newContantInfo.address.push("")
-		}
+		}*/
 		success(newContantInfo);
 	}, failure, "ContactPicker", "addContact", [newContant]);
 };
