@@ -40,14 +40,30 @@ public class ContactPickerPlugin extends CordovaPlugin {
         this.callbackContext = callbackContext;
         this.context = cordova.getActivity().getApplicationContext();
         if (action.equals("chooseContact")) {
-            Intent intent = new Intent(Intent.ACTION_PICK,
+           /* Intent intent = new Intent(Intent.ACTION_PICK,
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI);
 
             cordova.startActivityForResult(this, intent, CHOOSE_CONTACT);
 
             PluginResult r = new PluginResult(PluginResult.Status.NO_RESULT);
             r.setKeepCallback(true);
-            callbackContext.sendPluginResult(r);
+            callbackContext.sendPluginResult(r);*/
+           // JSONObject arg_object = args.getJSONObject(0);
+
+            Intent intentInsertEdit = new Intent(Intent.ACTION_INSERT_OR_EDIT);
+            intentInsertEdit.setType("vnd.android.cursor.item/contact");
+
+
+            try {
+                JSONObject contact = data.getJSONObject(0);
+                Log.e("contact",contact.toString());
+                if (contact != null) {
+                    intentInsertEdit.putExtra(Intents.Insert.EMAIL, contact.getString("email"));
+                }
+            } catch (Exception ex) {
+            }
+            this.cordova.getActivity().startActivity(intentInsertEdit);
+            callbackContext.success();
             return true;
         } else if (action.equals("addContact")) {
 
@@ -57,6 +73,7 @@ public class ContactPickerPlugin extends CordovaPlugin {
 
             try {
                 JSONObject contact = data.getJSONObject(0);
+                Log.e("contact",contact.toString());
                 if (contact != null) {
                     intent.putExtra(Intents.Insert.NAME, contact.getString("displayName"));
                     intent.putExtra(Intents.Insert.EMAIL, contact.getString("email"));
